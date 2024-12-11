@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="text-center">
+    <h1>Prediction Results</h1>
+    
+    <div class="table-responsive mt-4">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Target Sequence</th>
+                    <th>Off-Target Sequence</th>
+                    <th>Risk Probability</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                <tr>
+                    <td>{{ result.target_seq }}</td>
+                    <td>{{ result.offtarget_seq }}</td>
+                    <td>{{ "%.2f"|format(result.risk_prob * 100) }}%</td>
+                    <td>
+                        <span class="badge {% if result.risk_prob > 0.5 %}bg-danger{% else %}bg-success{% endif %}">
+                            {% if result.risk_prob > 0.5 %}High Risk{% else %}Low Risk{% endif %}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <a href="{{ url_for('main.index') }}" class="btn btn-primary mt-3">Upload Another File</a>
+</div>
+{% endblock %}

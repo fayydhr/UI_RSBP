@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="text-center">
+    <h1 class="mb-4">CRISPR Off-Target Risk Predictor</h1>
+    
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Upload Dataset</h5>
+            <p class="card-text">Please upload a .txt file containing your sequences.</p>
+            <p class="card-text text-muted">Format: target_sequence,offtarget_sequence,label (one per line)</p>
+            
+            <form method="POST" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                
+                <div class="mb-3">
+                    {{ form.file.label(class="form-label") }}
+                    {{ form.file(class="form-control") }}
+                    {% if form.file.errors %}
+                        <div class="text-danger">
+                            {% for error in form.file.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                {{ form.submit(class="btn btn-primary") }}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
